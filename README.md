@@ -74,3 +74,8 @@ Using Postman have access to few endpoints
    body { surveyId: <surveyId>, address: <Address of the surveyer>}`
 
 
+### Roadmap and TODO list:
+ - [] Improve frontend flow and integrate NEOLink to invoke create_survey
+ - [] Save Response and Survey to MongoDB
+ - [] Improve maths for carrying out the free tokensale.
+
