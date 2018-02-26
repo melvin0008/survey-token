@@ -78,23 +78,57 @@ class NEP5Handler():
         return False
 
     def do_transfer(self, storage: StorageAPI, t_from, t_to, amount):
-
-        msg = ['from', t_from]
-        msg2 = ['from', t_to]
-        msg3 = ['from', amount]
-        Notify(msg)
-        Notify(msg2)
-        Notify(msg3)
-
-        a = len(t_to)
-        msg = ["len", a]
-        Notify(msg)
-
-        a = len(t_from)
-        msg = ["lenf", a]
-        Notify(msg)
         if amount <= 0:
-            print("length1")
+            return False
+
+        if len(t_to) != 20:
+            return False
+
+        if CheckWitness(t_from):
+            if t_from == t_to:
+                print("transfer to self!")
+                return True
+
+            from_val = storage.get(t_from)
+            msg = ["msg", from_val]
+            Notify(msg)
+
+            if from_val < amount:
+                print("insufficient funds")
+                return False
+
+            if from_val == amount:
+                storage.delete(t_from)
+
+            else:
+                difference = from_val - amount
+                storage.put(t_from, difference)
+
+            to_value = storage.get(t_to)
+
+            to_total = to_value + amount
+
+            storage.put(t_to, to_total)
+
+            OnTransfer(t_from, t_to, amount)
+            print("transfer complete")
+
+            return True
+        print("from address is not the tx sender")
+        return False
+
+    def owner_transfer(self, storage: StorageAPI, t_from, t_to, amount):
+        """
+        Transfer tokens from the owner to the person who submits the survey
+        TODO: Move the logic to SC. SC should be holding the tokens
+
+        :param storage:StorageAPI A StorageAPI object for storage interaction
+        :param t_from Address of owner
+        :param t_to  Address of the surveyer
+        :param amount Amount that should be sent to the surveyer
+
+        """
+        if amount <= 0:
             return False
 
         if len(t_to) != 20:

@@ -13,7 +13,7 @@ class Token():
 
     # This is the script hash of the address for the owner of the token
     # This can be found in ``neo-python`` with the walet open, use ``wallet`` command
-    owner = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
+    owner = b'\x9bC\xb6]\x18\x0c\xa0\x12\xc0L\x83\x82RJ14\xfbdC\x06'
 
     sc_address = b'\x94\xcfe\x12\xf1T\x9d\xee\x86I\x0b\xd1 \xdb>6g\x1e\x9c\xb3'
 
