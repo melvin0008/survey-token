@@ -19,11 +19,11 @@ After the surveyer fills the review he will receive 10/10 = 1 GAS worth of token
  - Backend: https://github.com/melvin0008/survey-backend
 
 
-### Dapp Usage:
+## Dapp Usage:
 
 CozNet Hash: 0xd4903b35332d2a652f126ea6a978c179994321b3
 
-## Functions available:
+### Functions available:
 Name, symbol, decimals, balanceOf, transfer, transferFrom, totalSupply, approve and allowance and other NEX template functions.
 
 Since this is a market place where in there are two sides.
@@ -31,6 +31,7 @@ Since this is a market place where in there are two sides.
  - Survey Lister
 
 *After importing token to wallet*
+import token 0xd4903b35332d2a652f126ea6a978c179994321b3
 
 The person creating the survey will invoke the function 
 
@@ -43,7 +44,7 @@ Number of people to distribute the assets
 
 address of surveyer : will be the address of the person who will be rewarded. 
 
-### Backend
+## Backend
 To query the same from the backend setup the backend with 
 
 1. Clone backend
@@ -59,17 +60,17 @@ To query the same from the backend setup the backend with
 Using Postman have access to few endpoints
 
 1. Get Version
-   {APP_URL}/api/
+   `{APP_URL}/api/`
  
 2. Get Balance
-   {APP_URL}/api/wallet/<Address>
+   `{APP_URL}/api/wallet/<Address>`
  
 3. POST Survey
-   {APP_URL}/api/survey/
-   body { surveyId: <surveyId>, totalSurveyers: <totalSurveyers>}
+   `{APP_URL}/api/survey/
+   body { surveyId: <surveyId>, totalSurveyers: <totalSurveyers>}`
  
 4. POST Survey Response
-   {APP_URL}/api//survey/take
-   body { surveyId: <surveyId>, address: <Address of the surveyer>}
+   `{APP_URL}/api//survey/take
+   body { surveyId: <surveyId>, address: <Address of the surveyer>}`
 
 
