@@ -75,7 +75,7 @@ def perform_exchange(ctx):
             OnRefund(attachments[1], attachments[2])
         # if you want to exchange gas instead of neo, use this
         if attachments[3] > 0:
-           OnRefund(attachments.sender_addr, attachments[3])
+           OnRefund(attachments[1], attachments[3])
         return False
 
     # lookup the current balance of the address
