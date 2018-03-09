@@ -113,20 +113,14 @@ def reward(ctx, surveyid, surveyer_address):
     tokens = Get(ctx, total_tokens_key)
     number_of_surveyers = Get(ctx, number_of_surveyers_key)
     token_per_person = tokens / number_of_surveyers
-    token_per_person_unit = token_per_person / 100000000
-    if token_per_person_unit == 0:
+    if token_per_person == 0:
         print("Tokens for the survey are over")
         return False
-    # if not do_approve(ctx, TOKEN_OWNER, surveyer_address, token_per_person_unit):
-    #     print("Not approved by the owner")
-    #     return False
-    # if not do_transfer_from(ctx, TOKEN_OWNER, surveyer_address, token_per_person_unit):
-    #     print("Token transfer didnt go through")
-    #     return False
-    if not owner_transfer(ctx, TOKEN_OWNER, surveyer_address, token_per_person_unit):
+
+    if not do_transfer(ctx, TOKEN_OWNER, surveyer_address, token_per_person):
         print("Token transfer didnt go through")
         return False
-    new_tokens_total = tokens - token_per_person_unit
+    new_tokens_total = tokens - token_per_person
     new_surveyer_number = number_of_surveyers - 1
     Put(ctx, total_tokens_key, new_tokens_total)
     Put(ctx, number_of_surveyers_key, new_surveyer_number)
@@ -144,6 +138,13 @@ def create_survey(ctx, surveyid, number_of_surveyers):
     """
     attachments = get_asset_attachments()
     tokens = attachments[3] * TOKENS_PER_GAS / 100000000
+    if not perform_exchange(ctx):
+        print("Could  not perform minting")
+        return False
+    Notify("Minting completed")
+    if attachments[1] != TOKEN_OWNER and not do_transfer(ctx, attachments[1], TOKEN_OWNER, tokens):
+        return False
+    Notify("Transfer from survey creator to token owner completed")
     if tokens == 0:
         print("No tokens submitted to distribute")
         return False
@@ -157,4 +158,5 @@ def create_survey(ctx, surveyid, number_of_surveyers):
     number_of_surveyers_key = concat(surveyid, "no")
     Put(ctx, total_tokens_key, tokens)
     Put(ctx, number_of_surveyers_key,  number_of_surveyers)
+    print("Survey Created")
     return True

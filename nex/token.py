@@ -12,7 +12,7 @@ TOKEN_DECIMALS = 8
 
 # This is the script hash of the address for the owner of the token
 # This can be found in ``neo-python`` with the walet open, use ``wallet`` command
-TOKEN_OWNER = b'\x9bC\xb6]\x18\x0c\xa0\x12\xc0L\x83\x82RJ14\xfbdC\x06'
+TOKEN_OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
 
 SC_ADDRESS = b'\x94\xcfe\x12\xf1T\x9d\xee\x86I\x0b\xd1 \xdb>6g\x1e\x9c\xb3'
 
@@ -35,7 +35,7 @@ MAX_EXCHANGE_LIMITED_ROUND = 500 * 100 * 100000000
 BLOCK_SALE_START = 1
 
 # when to end the initial limited round
-LIMITED_ROUND_END = 1 + 10000000
+LIMITED_ROUND_END = 1
 
 KYC_KEY = b'kyc_ok'
 

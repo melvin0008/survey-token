@@ -85,7 +85,7 @@ def perform_exchange(ctx):
     exchanged_tokens = attachments[2] * TOKENS_PER_NEO / 100000000
 
     # if you want to exchange gas instead of neo, use this
-    # exchanged_tokens += attachments[3] * TOKENS_PER_GAS / 100000000
+    exchanged_tokens += attachments[3] * TOKENS_PER_GAS / 100000000
 
     # add it to the the exchanged tokens and persist in storage
     new_total = exchanged_tokens + current_balance
@@ -113,14 +113,14 @@ def can_exchange(ctx, attachments, verify_only):
     """
 
     # if you are accepting gas, use this
-#        if attachments[3] == 0:
-#            print("no gas attached")
-#            return False
+    if attachments[3] == 0:
+        print("no gas attached")
+        return False
 
     # if youre accepting neo, use this
 
-    if attachments[2] == 0:
-        return False
+    # if attachments[2] == 0:
+    #     return False
 
     # the following looks up whether an address has been
     # registered with the contract for KYC regulations
@@ -131,10 +131,10 @@ def can_exchange(ctx, attachments, verify_only):
     #     return False
 
     # caluclate the amount requested
-    amount_requested = attachments[2] * TOKENS_PER_NEO / 100000000
+    # amount_requested = attachments[2] * TOKENS_PER_NEO / 100000000
 
     # this would work for accepting gas
-    # amount_requested = attachments.gas_attached * token.tokens_per_gas / 100000000
+    amount_requested = attachments[3] * TOKENS_PER_GAS / 100000000
 
     exchange_ok = calculate_can_exchange(ctx, amount_requested, attachments[1], verify_only)
 
@@ -194,7 +194,6 @@ def calculate_can_exchange(ctx, amount, address, verify_only):
             if not verify_only:
                 Put(ctx, r1key, True)
             return True
-
         return False
 
     return False

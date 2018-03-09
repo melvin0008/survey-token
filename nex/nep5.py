@@ -62,7 +62,8 @@ def do_transfer(ctx, t_from, t_to, amount):
             return True
 
         from_val = Get(ctx, t_from)
-
+        print(from_val)
+        print(amount)
         if from_val < amount:
             print("insufficient funds")
             return False
