@@ -4,6 +4,7 @@ from boa.interop.Neo.Storage import *
 from boa.builtins import concat
 
 from nex.token import *
+from nex.txio import *
 
 
 OnTransfer = RegisterAction('transfer', 'addr_from', 'addr_to', 'amount')
@@ -44,13 +45,6 @@ def handle_nep51(ctx, operation, args):
         if len(args) == 2:
             return do_allowance(ctx, args[0], args[1])
 
-    elif operation == 'reward':
-        if len(args) == 2:
-            return reward(ctx, args[0], args[1])
-
-    elif operation == 'create_survey':
-        if len(args) == 2:
-            return reward(ctx, args[0], args[1])
     return False
 
 def do_transfer(ctx, t_from, t_to, amount):
@@ -215,52 +209,3 @@ def do_approve(ctx, t_owner, t_spender, amount):
 def do_allowance(ctx, t_owner, t_spender):
 
     return Get(ctx, concat(t_owner, t_spender))
-
-
-
-def reward(ctx, surveyid, surveyer_address):
-    total_tokens_key = concat(surveyid, "total_tokens")
-    number_of_surveyers_key = concat(surveyid, "no")
-    tokens = Get(ctx, total_tokens_key)
-    number_of_surveyers = Get(ctx, number_of_surveyers_key)
-    token_per_person = tokens / number_of_surveyers
-    token_per_person_unit = token_per_person / 100000000
-    if token_per_person_unit == 0:
-        print("Tokens for the survey are over")
-        return False
-    Notify(token_per_person_unit)
-    if not owner_transfer(ctx, TOKEN_OWNER, surveyer_address, token_per_person_unit):
-        print("Token transfer didnt go through")
-        return False
-    new_tokens_total = tokens - token_per_person_unit
-    new_surveyer_number = number_of_surveyers - 1
-    Put(ctx, total_tokens_key, new_tokens_total)
-    Put(ctx, number_of_surveyers_key, new_surveyer_number)
-    print("Reward successful")
-    return True
-
-def create_survey(ctx, surveyid, number_of_surveyers):
-    """
-    The set of questions which are part of the survey are submitted to MongoDB.
-    As part of the next step (this function) we take in the survey id and
-    the number of surveyers the lister wants to distribute the money to
-
-    :param args  Argument send to the smart contract. arg[0] -> SurveyId arg[1] -> number of surveyers.
-    :param token:Token Token object
-    """
-    attachments = get_asset_attachments()
-    tokens = attachments[3] * TOKENS_PER_GAS / 100000000
-    if tokens == 0:
-        print("No tokens submitted to distribute")
-        return False
-
-    if Get(ctx, surveyid):
-        print("Survey already added")
-        return False
-    if number_of_surveyers < 1:
-        return False
-    total_tokens_key = concat(surveyid, "total_tokens")
-    number_of_surveyers_key = concat(surveyid, "no")
-    Put(ctx, total_tokens_key, tokens)
-    Put(ctx, number_of_surveyers_key,  number_of_surveyers)
-    return True
