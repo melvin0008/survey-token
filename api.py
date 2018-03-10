@@ -25,6 +25,7 @@ from surtokencontract import SurTokenContract
 
 # Dev:
 SMART_CONTRACT_HASH = "18f39545aaf1f42a7ecbe6e4d0dc7995c1f83dc6"
+VERSION = "0.1.0"
 
 # Default REST API port is 8080, and can be overwritten with an env var:
 API_PORT = os.getenv("NEO_REST_API_PORT", 8080)
@@ -73,8 +74,17 @@ def build_error(error_code, error_message, to_json=True):
     }
     return json.dumps(res) if to_json else res
 
+@app.route('/api/', methods=['GET'])
+@json_response
+def token_balance(request, address):
+    # Collect data.
 
-@app.route('/api/balance/<address>', methods=['GET'])
+    return {
+        "version": VERSION
+    }
+
+
+@app.route('/api/wallet/<address>', methods=['GET'])
 @json_response
 def token_balance(request, address):
     # Collect data.
