@@ -16,7 +16,7 @@ After the surveyer fills the review he will receive 10/10 = 1 GAS worth of token
 
  - Smart Contract: https://github.com/melvin0008/survey-token
  - Frontend: https://github.com/melvin0008/survey-frontend
- - Backend: https://github.com/melvin0008/survey-backend
+ - Backend: https://github.com/melvin0008/survey-token/blob/master/api.py
 
 
 ## Dapp Usage:
@@ -33,19 +33,19 @@ Since this is a market place where in there are two sides.
 *After importing token to wallet*
 import token 0xd4903b35332d2a652f126ea6a978c179994321b3
 
-The person creating the survey will invoke the function 
+The person creating the survey will invoke the function
 
 `testinvoke 0xd4903b35332d2a652f126ea6a978c179994321b3 create_survey  [“<survey_id>”, <number_of_people to distribute to>] --attach-gas=<GAS that will be redistributed>`
 
-Survey Id: The id of the survey with question. 
+Survey Id: The id of the survey with question.
 Number of people to distribute the assets
 
 `testinvoke 0xd4903b35332d2a652f126ea6a978c179994321b3 reward  [“<survey_id>”, <address of surveyer>]`
 
-address of surveyer : will be the address of the person who will be rewarded. 
+address of surveyer : will be the address of the person who will be rewarded.
 
 ## Backend
-To query the same from the backend setup the backend with 
+To query the same from the backend setup the backend with
 
 1. Clone backend
 `git clone https://github.com/melvin0008/survey-backend.git`
@@ -61,16 +61,16 @@ Using Postman have access to few endpoints
 
 1. Get Version
    `{APP_URL}/api/`
- 
+
 2. Get Balance
    `{APP_URL}/api/wallet/<Address>`
- 
+
 3. POST Survey
    `{APP_URL}/api/survey/
    body { surveyId: <surveyId>, totalSurveyers: <totalSurveyers>}`
- 
-4. POST Survey Response
-   `{APP_URL}/api//survey/take
+
+4. POST Get rewarded after survey
+   `{APP_URL}/api/reward
    body { surveyId: <surveyId>, address: <Address of the surveyer>}`
 
 
