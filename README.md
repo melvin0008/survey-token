@@ -16,7 +16,7 @@ After the surveyer fills the review he will receive 10/10 = 1 GAS worth of token
 
  - Smart Contract: https://github.com/melvin0008/survey-token
  - Frontend: https://github.com/melvin0008/survey-frontend
- - Backend: https://github.com/melvin0008/survey-backend
+ - Backend: https://github.com/melvin0008/survey-token/blob/master/api.py
 
 
 ## Dapp Usage:
@@ -70,7 +70,7 @@ Using Postman have access to few endpoints
    body { surveyId: <surveyId>, totalSurveyers: <totalSurveyers>}`
  
 4. POST Survey Response
-   `{APP_URL}/api//survey/take
+   `{APP_URL}/api/survey/take
    body { surveyId: <surveyId>, address: <Address of the surveyer>}`
 
 
