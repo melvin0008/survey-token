@@ -5,12 +5,10 @@ import json
 class Database(object):
 
     dbpool = adbapi.ConnectionPool('sqlite3', 'test.db', check_same_thread=False)
-
-    def __init__(self, table):
-      self.table = table
+    table = 'surveys'
 
     def _insert(self, cursor, survey_id, survey_json):
-        insert_stmt = "insert into countries values (?, ?)", [survey_id, json.dumps(survey_json)]
+        insert_stmt = 'insert into %s (id, data) values ("%s", "%s")' % (self.table, survey_id, json.dumps(survey_json))
         cursor.execute(insert_stmt)
 
     def insert(self, survey_id, survey_json):
