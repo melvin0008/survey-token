@@ -4,12 +4,15 @@ import threading
 import json
 import binascii
 import base58
+import uuid
+
 from time import sleep
 from Crypto import Random
 
 from logzero import logger
 from twisted.internet import reactor, task, endpoints
 from twisted.web.server import Request, Site
+from twisted.enterprise import adbapi
 from klein import Klein, resource
 
 from neo.Network.NodeLeader import NodeLeader
@@ -20,8 +23,10 @@ from neo.Settings import settings
 from neo.Network.api.decorators import json_response, gen_authenticated_decorator, catch_exceptions
 from neo.contrib.smartcontract import SmartContract
 
+from utils.decorators import cors
 from neocore.KeyPair import KeyPair
 from surtokencontract import SurTokenContract
+from database import Database
 
 # Dev:
 SMART_CONTRACT_HASH = "18f39545aaf1f42a7ecbe6e4d0dc7995c1f83dc6"
@@ -46,6 +51,7 @@ surTokenContract = SurTokenContract(SMART_CONTRACT_HASH, wallet_path, 'coz')
 
 # Internal: setup the klein instance
 app = Klein()
+db = Database('surveys')
 
 # Custom code that runs in the background
 #
@@ -58,7 +64,6 @@ def custom_background_code():
     while True:
         logger.info("Block %s / %s", str(Blockchain.Default().Height), str(Blockchain.Default().HeaderHeight))
         sleep(15)
-
 
 # API error codes
 STATUS_ERROR_AUTH_TOKEN = 1
@@ -76,7 +81,7 @@ def build_error(error_code, error_message, to_json=True):
 
 @app.route('/api/', methods=['GET'])
 @json_response
-def token_balance(request, address):
+def token_version(request):
     # Collect data.
 
     return {
@@ -99,11 +104,22 @@ def token_balance(request, address):
 @app.route('/api/reward', methods=['POST'])
 @json_response
 def reward(request):
-  data = json.loads(request.content.read().decode("utf-8"))
-  survey_id = data['survey_id']
-  hex_address = binascii.hexlify(base58.b58decode_check(data['reward_address'])[1:])
-  surTokenContract.add_invoke('reward', survey_id, hex_address)
-  return True
+    data = json.loads(request.content.read().decode("utf-8"))
+    survey_id = data['survey_id']
+    hex_address = binascii.hexlify(base58.b58decode_check(data['reward_address'])[1:])
+    surTokenContract.add_invoke('reward', survey_id, hex_address)
+    return True
+
+@app.route('/api/survey', methods=['POST'])
+@cors
+@json_response
+def survey(request):
+    data = json.loads(request.content.read().decode("utf-8"))
+    survey_id = uuid.uuid4().hex
+    db.insert(survey_id, data)
+    return {
+            "survey_id": survey_id
+    }
 
 #
 # Main method which starts everything up
@@ -149,7 +165,7 @@ def main():
     d.setDaemon(True)  # daemonizing the thread will kill it when the main thread is quit
     d.start()
 
-    # Start ImuSmartContract thread
+    # Start SurTokenContract thread
     surTokenContract.start()
 
     # Hook up Klein API to Twisted reactor
