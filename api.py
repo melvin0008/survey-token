@@ -51,7 +51,7 @@ surTokenContract = SurTokenContract(SMART_CONTRACT_HASH, wallet_path, 'coz')
 
 # Internal: setup the klein instance
 app = Klein()
-db = Database('surveys')
+db = Database()
 
 # Custom code that runs in the background
 #
@@ -101,6 +101,16 @@ def token_balance(request, address):
         "balance": balance
     }
 
+@app.route('/api/survey/<survey_id>', methods=['GET'])
+@cors
+def get_survey(request, survey_id):
+    print(survey_id)
+    data = db.query(survey_id)
+    data.addCallback(toJSON, request)
+    data.addErrback(onFail, request, 'Failed to query db')
+    return data
+
+
 @app.route('/api/reward', methods=['POST'])
 @json_response
 def reward(request):
@@ -112,14 +122,36 @@ def reward(request):
 
 @app.route('/api/survey', methods=['POST'])
 @cors
-@json_response
 def survey(request):
     data = json.loads(request.content.read().decode("utf-8"))
     survey_id = uuid.uuid4().hex
-    db.insert(survey_id, data)
-    return {
-            "survey_id": survey_id
-    }
+    data = db.insert(survey_id, data)
+    data.addCallback(onSuccess, request, 'Insert success')
+    data.addErrback(onFail, request, 'Insert failed')
+    return data
+
+def onSuccess(result, request, msg):
+    request.setResponseCode(201)
+    print(msg)
+    response = {'message': msg}
+    return json.dumps(response)
+
+def onFail(failure, request, msg):
+    request.setResponseCode(417)
+    print(failure)
+    response = {'message': msg}
+    return json.dumps(response)
+
+def toJSON(results, request):
+    request.setHeader('Content-Type', 'application/json')
+    responseJSON = []
+    print(results)
+    for record in results:
+        mapper = {}
+        mapper['id'] = record[0]
+        mapper['json'] = json.loads(record[1])
+        responseJSON.append(mapper)
+    return json.dumps(responseJSON)
 
 #
 # Main method which starts everything up
