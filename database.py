@@ -4,21 +4,23 @@ import json
 
 class Database(object):
 
-    dbpool = adbapi.ConnectionPool('sqlite3', 'test.db', check_same_thread=False)
-    table = 'surveys'
+    def __init__(self, table):
+        self.table = table
+        self.dbpool = adbapi.ConnectionPool('sqlite3', 'test.db', check_same_thread=False)
 
-    def _insert(self, cursor, survey_id, survey_json):
-        json_str = json.dumps(survey_json)
-        insert_stmt = "INSERT INTO surveys VALUES (?, ?);"
-        cursor.execute(insert_stmt, (survey_id, json_str))
+    def _insert(self, cursor, json_id, json_doc):
+        json_str = json.dumps(json_doc)
+        insert_stmt = "INSERT INTO " + self.table + "  VALUES (?, ?);"
+        cursor.execute(insert_stmt, (json_id, json_str))
 
-    def insert(self, survey_id, survey_json):
-        return self.dbpool.runInteraction(self._insert, survey_id, survey_json)
+    def insert_json(self, json_id, json_doc):
+        return self.dbpool.runInteraction(self._insert, json_id, json_doc)
 
-    def query(self, survey_id):
-        select_stmt = 'SELECT * FROM %s where id="%s"' % (self.table, survey_id)
+    def query(self, id):
+        select_stmt = 'SELECT * FROM %s where id="%s"' % (self.table, id)
         return self.dbpool.runQuery(select_stmt)
 
     def queryAll(self):
         select_stmt = 'SELECT * FROM %s' % (self.table)
         return self.dbpool.runQuery(select_stmt)
+

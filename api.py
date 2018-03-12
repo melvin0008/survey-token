@@ -51,8 +51,8 @@ surTokenContract = SurTokenContract(SMART_CONTRACT_HASH, wallet_path, 'coz')
 
 # Internal: setup the klein instance
 app = Klein()
-db = Database()
-
+survey_db = Database('surveys')
+results_db = Database('results')
 # Custom code that runs in the background
 #
 def custom_background_code():
@@ -104,12 +104,30 @@ def token_balance(request, address):
 @app.route('/api/survey/<survey_id>', methods=['GET'])
 @cors
 def get_survey(request, survey_id):
-    print(survey_id)
-    data = db.query(survey_id)
+    data = survey_db.query(survey_id)
     data.addCallback(toJSON, request)
     data.addErrback(onFail, request, 'Failed to query db')
     return data
 
+@app.route('/api/survey', methods=['POST'])
+@cors
+def survey(request):
+    data = json.loads(request.content.read().decode("utf-8"))
+    survey_id = uuid.uuid4().hex
+    data = survey_db.insert_json(survey_id, data)
+    data.addCallback(onSuccess, request, survey_id)
+    data.addErrback(onFail, request, 'Insert failed')
+    return data
+
+@app.route('/api/result', methods=['POST'])
+@cors
+def result(request):
+    data = json.loads(request.content.read().decode("utf-8"))
+    survey_id = data['survey_id']
+    data = results_db.insert_json(survey_id, data['json'])
+    data.addCallback(onSuccess, request, survey_id)
+    data.addErrback(onFail, request, 'Insert failed')
+    return data
 
 @app.route('/api/reward', methods=['POST'])
 @json_response
@@ -120,20 +138,9 @@ def reward(request):
     surTokenContract.add_invoke('reward', survey_id, hex_address)
     return True
 
-@app.route('/api/survey', methods=['POST'])
-@cors
-def survey(request):
-    data = json.loads(request.content.read().decode("utf-8"))
-    survey_id = uuid.uuid4().hex
-    data = db.insert(survey_id, data)
-    data.addCallback(onSuccess, request, 'Insert success')
-    data.addErrback(onFail, request, 'Insert failed')
-    return data
-
-def onSuccess(result, request, msg):
+def onSuccess(result, request, data):
     request.setResponseCode(201)
-    print(msg)
-    response = {'message': msg}
+    response = {'data': data}
     return json.dumps(response)
 
 def onFail(failure, request, msg):
