@@ -130,13 +130,16 @@ def result(request):
     return data
 
 @app.route('/api/reward', methods=['POST'])
+@cors
 @json_response
 def reward(request):
     data = json.loads(request.content.read().decode("utf-8"))
     survey_id = data['survey_id']
     hex_address = binascii.hexlify(base58.b58decode_check(data['reward_address'])[1:])
     surTokenContract.add_invoke('reward', survey_id, hex_address)
-    return True
+    return {
+        "success": "ok"
+    }
 
 def onSuccess(result, request, data):
     request.setResponseCode(201)
