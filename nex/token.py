@@ -14,8 +14,6 @@ TOKEN_DECIMALS = 8
 # This can be found in ``neo-python`` with the walet open, use ``wallet`` command
 TOKEN_OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
 
-SC_ADDRESS = b'\x94\xcfe\x12\xf1T\x9d\xee\x86I\x0b\xd1 \xdb>6g\x1e\x9c\xb3'
-
 TOKEN_CIRC_KEY = b'in_circulation'
 
 TOKEN_TOTAL_SUPPLY = 10000000 * 100000000  # 10m total supply * 10^8 ( decimals)

@@ -137,7 +137,13 @@ def create_survey(ctx, surveyid, number_of_surveyers):
     :param token:Token Token object
     """
     attachments = get_asset_attachments()
-    tokens = attachments[3] * TOKENS_PER_GAS / 100000000
+    tokens = 0
+    if attachments[2] !=0:
+        tokens = attachments[2] * TOKENS_PER_NEO / 100000000
+    else if attachments[3] != 0:
+        tokens = attachments[3] * TOKENS_PER_GAS / 100000000
+    else:
+        return False
     if not perform_exchange(ctx):
         print("Could  not perform minting")
         return False

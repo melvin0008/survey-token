@@ -1,3 +1,4 @@
 *.pyc
 nex/*.pyc
 nex/*/*.pyc
+*.log

@@ -36,17 +36,19 @@ VERSION = "0.1.0"
 API_PORT = os.getenv("NEO_REST_API_PORT", 8080)
 
 # If you want to enable logging to a file, set the filename here:
-LOGFILE = os.getenv("NEO_REST_LOGFILE", None)
+
+
+dir_current = os.path.dirname(os.path.abspath(__file__))
+wallet_path = os.path.join(dir_current, "neo-privnet.wallet")
+print("wallet path:", wallet_path)
+
+LOGFILE = os.getenv("NEO_REST_LOGFILE", os.path.join(dir_current, "rest.log" ))
 
 # Internal: if LOGFILE is set, file logging will be setup with max
 # 10 MB per file and 3 rotations:
 if LOGFILE:
     settings.set_logfile(LOGFILE, max_bytes=1e7, backup_count=3)
 
-
-dir_current = os.path.dirname(os.path.abspath(__file__))
-wallet_path = os.path.join(dir_current, "neo-privnet.wallet")
-print("wallet path:", wallet_path)
 surTokenContract = SurTokenContract(SMART_CONTRACT_HASH, wallet_path, 'coz')
 
 # Internal: setup the klein instance
