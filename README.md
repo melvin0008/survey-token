@@ -1,5 +1,8 @@
 # Survey - Token
 
+### Demo Video: 
+https://www.youtube.com/watch?v=UaWMneJLy9U
+
 ### Use-Case:
 Have you ever taken a survey or review and not been rewarded for it? With Survey token we remove the middleman like SurveyMonkey and G2Crowd and redistribute the money to people taking the survey and adding reviews. In the arena for survey marketplace there are two major stakeholders. The person/company creating the survey and the person taking the survey. Usually the survey creator creates a paid survey on survey monkey or G2Crowd annd the person taking the survey is rarely rewarded. 
 
