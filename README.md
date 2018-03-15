@@ -103,3 +103,10 @@ Using Postman have access to few endpoints
  - [] Change Backend from sqllite to MongoDB
  - [] Improve maths for carrying out the free tokensale.
  - [] Add Results page for admin to check results (GET)
+ 
+ 
+ ### For DAPP Competition:
+ 
+ Changes made after 25th Feb:
+ 1. Update to latest neo-python with python 3.6. Update neo-template too with this.
+ 2. Work on frontend and backend of the the product.
