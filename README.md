@@ -31,7 +31,8 @@ Currently 1 GAS = 40 SUR Tokens
 
 ## Dapp Usage:
 
-CozNet Hash: 0xd4903b35332d2a652f126ea6a978c179994321b3
+CozNet Hash: 0xd4903b35332d2a652f126ea6a978c179994321b3 (Old one)
+Will update a new one soon
 
 ### Functions available:
 Name, symbol, decimals, balanceOf, transfer, transferFrom, totalSupply, approve and allowance and other NEX template functions.
