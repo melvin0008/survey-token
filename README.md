@@ -1,7 +1,11 @@
 # Survey - Token
 
 ### Use-Case:
-Have you ever filled a survey or review and not been rewarded for it? With Survey token we remove the middleman like SurveyMonkey and G2Crowd and redistribute the money to people taking the survey and adding reviews. Survey Monkey is a billion dollar company and G2 Crowd is funded with 45M dollars. Very few surveyers/ reviewers are  rewarded in coupons. With Survey token running on NEO, we incentivize surveyers with SUR token. SUR tokens are bought by the survey lister. 
+Have you ever taken a survey or review and not been rewarded for it? With Survey token we remove the middleman like SurveyMonkey and G2Crowd and redistribute the money to people taking the survey and adding reviews. In the arena for survey marketplace there are two major stakeholders. The person/company creating the survey and the person taking the survey. Usually the survey creator creates a paid survey on survey monkey or G2Crowd annd the person taking the survey is rarely rewarded. 
+
+Survey Monkey is a billion dollar company and G2 Crowd is funded with 45M dollars. Very few surveyers/ reviewers are  rewarded in coupons. 
+
+With Survey token running on NEO, we incentivize surveyers with SUR token. SUR tokens are bought by the survey lister. 
 
 
 ### Flow:
