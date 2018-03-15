@@ -103,6 +103,9 @@ Using Postman have access to few endpoints
    
  He/She will only be rewarded if survey id will have remaining tokens to redistribute.
  He/She can only take survey once. (TODO)
+ 
+ Only survey metadata and transactions are stored in the blockchain.
+ Survey questions and answers are stored in DB
 
 
 ### Roadmap and TODO list:
