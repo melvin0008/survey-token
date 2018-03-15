@@ -65,6 +65,9 @@ To query the same from the backend setup the backend with
 2. Clone backend
 `git clone https://github.com/melvin0008/survey-token/` and create a copy this to neo-python folder
 
+3. Create DB
+`python contracts/utils/db_create.py`
+
 3. Run app
 ` python contracts/api.py`
 
