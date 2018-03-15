@@ -92,6 +92,7 @@ def token_version(request):
 
 
 @app.route('/api/wallet/<address>', methods=['GET'])
+@cors
 @json_response
 def token_balance(request, address):
     # Collect data.
