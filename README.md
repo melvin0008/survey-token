@@ -31,8 +31,9 @@ Currently 1 GAS = 40 SUR Tokens
 
 ## Dapp Usage:
 
+TestNet Hash: 0x46486fc3149a9c4074d67421528c58da9d7f0285 -> Latest
+
 CozNet Hash: 0xd4903b35332d2a652f126ea6a978c179994321b3 (Old one)
-Will update a new one soon
 
 ### Functions available:
 Name, symbol, decimals, balanceOf, transfer, transferFrom, totalSupply, approve and allowance and other NEX template functions.
@@ -42,22 +43,22 @@ Since this is a market place where in there are two sides.
  - Survey Lister
 
 *After importing token to wallet*
-import token 0xd4903b35332d2a652f126ea6a978c179994321b3
+import token 0x46486fc3149a9c4074d67421528c58da9d7f0285
 
 The person creating the survey will invoke the function
 
-`testinvoke 0xd4903b35332d2a652f126ea6a978c179994321b3 create_survey  [“<survey_id>”, <number_of_people to distribute to>] --attach-gas=<GAS that will be redistributed>`
+`testinvoke 0x46486fc3149a9c4074d67421528c58da9d7f0285 create_survey  ["<survey_id>", "<number_of_people to distribute to>"] --attach-gas=<GAS that will be redistributed>`
 
 or
 
-`testinvoke 0xd4903b35332d2a652f126ea6a978c179994321b3 create_survey  [“<survey_id>”, <number_of_people to distribute to>] --attach-neo=<NEO that will be redistributed>`
+`testinvoke Ox46486fc3149a9c4074d67421528c58da9d7f0285 create_survey  [“<survey_id>”, "<number_of_people to distribute to>"] --attach-neo=<NEO that will be redistributed>`
 
 Make sure NEO is a whole number.
 
 Survey Id: The id of the survey with question.
 Number of people to distribute the assets
 
-`testinvoke 0xd4903b35332d2a652f126ea6a978c179994321b3 reward  [“<survey_id>”, <address of surveyer>]`
+`testinvoke 0x46486fc3149a9c4074d67421528c58da9d7f0285 reward  ["<survey_id>", "<address of surveyer>"]`
 
 address of surveyer : will be the address of the person who will be rewarded.
 
