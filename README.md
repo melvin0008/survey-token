@@ -1,5 +1,8 @@
 # Survey - Token
 
+### Demo Video: 
+https://www.youtube.com/watch?v=UaWMneJLy9U
+
 ### Use-Case:
 Have you ever taken a survey or review and not been rewarded for it? With Survey token we remove the middleman like SurveyMonkey and G2Crowd and redistribute the money to people taking the survey and adding reviews. In the arena for survey marketplace there are two major stakeholders. The person/company creating the survey and the person taking the survey. Usually the survey creator creates a paid survey on survey monkey or G2Crowd annd the person taking the survey is rarely rewarded. 
 
@@ -28,7 +31,8 @@ Currently 1 GAS = 40 SUR Tokens
 
 ## Dapp Usage:
 
-CozNet Hash: 0xd4903b35332d2a652f126ea6a978c179994321b3
+CozNet Hash: 0xd4903b35332d2a652f126ea6a978c179994321b3 (Old one)
+Will update a new one soon
 
 ### Functions available:
 Name, symbol, decimals, balanceOf, transfer, transferFrom, totalSupply, approve and allowance and other NEX template functions.
@@ -65,6 +69,9 @@ To query the same from the backend setup the backend with
 2. Clone backend
 `git clone https://github.com/melvin0008/survey-token/` and create a copy this to neo-python folder
 
+3. Create DB
+`python contracts/utils/db_create.py`
+
 3. Run app
 ` python contracts/api.py`
 
@@ -97,9 +104,19 @@ Using Postman have access to few endpoints
    
  He/She will only be rewarded if survey id will have remaining tokens to redistribute.
  He/She can only take survey once. (TODO)
+ 
+ Only survey metadata and transactions are stored in the blockchain.
+ Survey questions and answers are stored in DB
 
 
 ### Roadmap and TODO list:
  - [] Change Backend from sqllite to MongoDB
  - [] Improve maths for carrying out the free tokensale.
  - [] Add Results page for admin to check results (GET)
+ 
+ 
+ ### For DAPP Competition:
+ 
+ Changes made after 25th Feb:
+ 1. Update to latest neo-python with python 3.6. Update neo-template too with this.
+ 2. Work on frontend and backend of the the product.
