@@ -29,7 +29,7 @@ from surtokencontract import SurTokenContract
 from database import Database
 
 # Dev:
-SMART_CONTRACT_HASH = "18f39545aaf1f42a7ecbe6e4d0dc7995c1f83dc6"
+SMART_CONTRACT_HASH = "46486fc3149a9c4074d67421528c58da9d7f0285"
 VERSION = "0.1.0"
 
 # Default REST API port is 8080, and can be overwritten with an env var:

@@ -3,8 +3,8 @@ from boa.interop.Neo.Action import RegisterAction
 from boa.interop.Neo.Storage import *
 from boa.builtins import concat
 
-from nex.token import *
-from nex.txio import *
+from sur.token import *
+from sur.txio import *
 
 
 OnTransfer = RegisterAction('transfer', 'addr_from', 'addr_to', 'amount')
@@ -88,53 +88,6 @@ def do_transfer(ctx, t_from, t_to, amount):
         print("from address is not the tx sender")
 
     return False
-
-def owner_transfer(ctx, t_from, t_to, amount):
-    """
-    Transfer tokens from the owner to the person who submits the survey
-    TODO: Move the logic to SC. SC should be holding the tokens
-
-    :param storage:StorageAPI A StorageAPI object for storage interaction
-    :param t_from Address of owner
-    :param t_to  Address of the surveyer
-    :param amount Amount that should be sent to the surveyer
-
-    """
-    if amount <= 0:
-        return False
-
-    if len(t_to) != 20:
-        return False
-
-    if t_from == t_to:
-        print("transfer to self!")
-        return True
-
-    from_val = Get(ctx, t_from)
-    msg = ["msg", from_val]
-    Notify(msg)
-
-    if from_val < amount:
-        print("insufficient funds")
-        return False
-
-    if from_val == amount:
-        Delete(ctx, t_from)
-
-    else:
-        difference = from_val - amount
-        Put(ctx, t_from, difference)
-
-    to_value = Get(ctx, t_to)
-
-    to_total = to_value + amount
-
-    Put(ctx, t_to, to_total)
-
-    OnTransfer(t_from, t_to, amount)
-    print("transfer complete")
-
-    return True
 
 def do_transfer_from(ctx, t_from, t_to, amount):
 

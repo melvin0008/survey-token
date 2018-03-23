@@ -6,11 +6,16 @@ NEX ICO Template
 Author: Thomas Saunders
 Email: tom@neonexchange.org
 Date: Dec 11 2017
+
+Survey Token Updates
+===================================
+Author: Melvin Philips
+Email: melvin0008@gmail.com
 """
-from nex.txio import get_asset_attachments
-from nex.token import *
-from nex.crowdsale import *
-from nex.nep5 import *
+from sur.txio import get_asset_attachments
+from sur.token import *
+from sur.crowdsale import *
+from sur.nep5 import *
 from boa.interop.Neo.Runtime import GetTrigger, CheckWitness
 from boa.interop.Neo.TriggerType import Application, Verification
 from boa.interop.Neo.Storage import *
@@ -140,7 +145,7 @@ def create_survey(ctx, surveyid, number_of_surveyers):
     tokens = 0
     if attachments[2] !=0:
         tokens = attachments[2] * TOKENS_PER_NEO / 100000000
-    else if attachments[3] != 0:
+    elif attachments[3] != 0:
         tokens = attachments[3] * TOKENS_PER_GAS / 100000000
     else:
         return False
@@ -155,9 +160,9 @@ def create_survey(ctx, surveyid, number_of_surveyers):
         print("No tokens submitted to distribute")
         return False
 
-    # if Get(ctx, surveyid):
-    #     print("Survey already added")
-    #     return False
+    if Get(ctx, surveyid):
+        print("Survey already added")
+        return False
     if number_of_surveyers < 1:
         return False
     total_tokens_key = concat(surveyid, "total_tokens")

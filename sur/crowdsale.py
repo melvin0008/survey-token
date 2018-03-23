@@ -3,8 +3,8 @@ from boa.interop.Neo.Runtime import CheckWitness
 from boa.interop.Neo.Action import RegisterAction
 from boa.interop.Neo.Storage import Get, Put
 from boa.builtins import concat
-from nex.token import *
-from nex.txio import get_asset_attachments
+from sur.token import *
+from sur.txio import get_asset_attachments
 
 # OnInvalidKYCAddress = RegisterAction('invalid_registration', 'address')
 OnKYCRegister = RegisterAction('kyc_registration', 'address')
@@ -113,9 +113,9 @@ def can_exchange(ctx, attachments, verify_only):
     """
 
     # if you are accepting gas, use this
-    if attachments[3] == 0:
-        print("no gas attached")
-        return False
+    # if attachments[2] == 0 and attachments[3] == 0:
+    #     print("No neo/gas attached")
+    #     return False
 
     # if youre accepting neo, use this
 
@@ -134,7 +134,13 @@ def can_exchange(ctx, attachments, verify_only):
     # amount_requested = attachments[2] * TOKENS_PER_NEO / 100000000
 
     # this would work for accepting gas
-    amount_requested = attachments[3] * TOKENS_PER_GAS / 100000000
+    if attachments[3] > 0:
+        amount_requested = attachments[3] * TOKENS_PER_GAS / 100000000
+    elif attachments[2] > 0:
+        amount_requested = attachments[2] * TOKENS_PER_NEO / 100000000
+    else:
+        print("No neo/gas attached")
+        return False
 
     exchange_ok = calculate_can_exchange(ctx, amount_requested, attachments[1], verify_only)
 
